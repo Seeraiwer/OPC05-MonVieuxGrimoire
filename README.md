@@ -1,75 +1,71 @@
-# MPM - Mon Petit Monde du Livre
+## MPM — Mon Petit Monde du Livre
 
-> Une application web moderne pour découvrir, noter et partager des livres.
-
----
+Application web pour découvrir, noter et partager des livres.
 
 ## Description
 
-MPM est une plateforme web permettant aux utilisateurs de :
+MPM permet aux utilisateurs de :
 - Créer un compte et se connecter
-- Ajouter leurs propres livres
-- Noter et consulter des livres existants
-- Modifier ou supprimer les livres qu'ils ont ajoutés
+- Ajouter, modifier et supprimer leurs livres
 - Joindre une image de couverture
-- Voir les livres les mieux notés
+- Noter et consulter les livres (moyenne affichée)
 
-Le projet est conçu avec une architecture **MERN** (MongoDB, Express, React, Node.js) et respecte des pratiques de développement **durables et sécurisées**.
-
----
+Architecture : **MongoDB + Express + React + Node.js (MERN)**.
 
 ## Fonctionnalités principales
 
-- Authentification sécurisée avec **JWT**
-- API RESTful complète (CRUD + notation)
-- Stockage MongoDB avec modèles Mongoose
-- Approche green code (optimisation images, SPA, stateless)
-- Upload d’image avec **Multer**
-- Calcul dynamique de la note moyenne (arrondie à 2 décimales)
-- Frontend en React avec routing (`react-router-dom`) et composants modulaires
-
----
+- Authentification par **JWT**
+- API RESTful (CRUD + notes)
+- Upload d'images avec **Multer** (stockage local)
+- Backend : Express + Mongoose
+- Frontend : React (create-react-app)
 
 ## Installation
 
 ### Prérequis
 
 - Node.js >= 18
-- MongoDB (local ou distant)
-- npm ou yarn
+- MongoDB accessible (local ou distant)
+- `npm` ou `yarn`
 
-#### Installer le backend
-
-```bash
-cd backend
-npm install
-cp .env.example .env
-# Remplir les variables (MONGO_URI, JWT_SECRET, etc.)
-npm run start
-```
-
-#### Installer le frontend
+### Backend
 
 ```bash
-cd ../frontend
+cd back-end
 npm install
-npm run dev
+# Créer un fichier .env à la racine de back-end contenant :
+# MONGODB_URI=<votre_URI_MongoDB>
+# TOKEN_SECRET=<secret_pour_jwt>
+# PORT=<port_optionnel>
+npm start
 ```
+
+### Frontend
+
+```bash
+cd front-end
+npm install
+npm start
+```
+
+## Variables d'environnement importantes
+
+- `MONGODB_URI` : chaîne de connexion MongoDB
+- `TOKEN_SECRET` : secret utilisé pour signer les JWT
+- `PORT` : port d'écoute du serveur (optionnel)
 
 ## Sécurité
 
-- Authentification **JWT**
-- Mots de passe **hachés avec bcrypt**
-- Middleware d’autorisation pour les routes protégées
+- Mots de passe hachés avec `bcrypt`
+- Routes protégées par middleware JWT
+
+## Notes opérationnelles
+
+- Les images uploadées sont stockées dans le dossier `images/` (créé à l'exécution).
+- Le dépôt contient des dossiers `back-end` et `front-end` distincts.
 
 ---
 
-## Green Code
-
-- Stateless : aucune session serveur conservée
-- Optimisation images (taille réduite)
-- SPA : Single Page Application légère
-- Frontend modulaire, composants ciblés
-- État local réduit à l’essentiel
-
----
+Si vous souhaitez, je peux :
+- Exécuter un scan final pour vérifier l'absence d'artefacts générés par LLM
+- Ajouter un `.gitignore` racine adapté

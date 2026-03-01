@@ -1,10 +1,9 @@
-const sharp = require('sharp'); // Bibliothèque de traitement d’images (redimensionnement, compression, etc.)
-const path = require('path');   // Utilitaire pour gérer les chemins de fichiers
-const fs = require('fs');       // Module pour les opérations sur le système de fichiers
+const sharp = require('sharp'); 
+const path = require('path'); 
+const fs = require('fs'); 
 
 // Middleware d’optimisation d’image à appliquer après l’upload (via Multer)
 module.exports = (req, res, next) => {
-  // Si aucune image n’est attachée à la requête, on passe au middleware suivant
   if (!req.file) return next();
 
   const { filename } = req.file;
@@ -16,9 +15,6 @@ module.exports = (req, res, next) => {
   const optimizedFilename = 'optimized_' + filename;
   const outputPath = path.join(__dirname, '../images', optimizedFilename);
 
-  // Traitement de l’image avec Sharp :
-  // - Redimensionne à une largeur max de 500px sans agrandissement
-  // - Compresse l’image au format JPEG avec une qualité de 70%
   sharp(inputPath)
     .resize({
       width: 500,
@@ -31,13 +27,11 @@ module.exports = (req, res, next) => {
       fs.unlink(inputPath, (err) => {
         if (err) {
           console.error('Erreur lors de la suppression du fichier original :', err);
-          // Même si l'image originale ne peut pas être supprimée, on continue
         }
 
         // Mise à jour de la requête pour que le contrôleur utilise le nom du fichier optimisé
         req.file.filename = optimizedFilename;
 
-        // Poursuite du traitement de la requête
         next();
       });
     })

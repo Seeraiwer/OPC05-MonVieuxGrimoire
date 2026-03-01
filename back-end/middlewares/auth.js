@@ -20,13 +20,10 @@ module.exports = (req, res, next) => {
     const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
 
     // Injection de l’ID utilisateur décodé dans la requête (req.auth)
-    // Cela permet aux contrôleurs de vérifier l’identité du demandeur
     req.auth = { userId: decodedToken.userId };
 
-    // Poursuite du traitement : le token est valide
     next();
   } catch (error) {
-    // Erreurs possibles : token expiré, signature invalide, champ manquant...
     console.error("Erreur d'authentification :", error.message);
     res.status(401).json({ error: 'Requête non authentifiée' });
   }

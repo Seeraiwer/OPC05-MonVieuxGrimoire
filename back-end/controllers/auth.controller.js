@@ -1,6 +1,6 @@
-const bcrypt = require('bcrypt'); // Module pour hacher les mots de passe
-const jwt = require('jsonwebtoken'); // Module pour générer des tokens d'authentification
-const User = require('../models/user'); // Modèle utilisateur MongoDB via Mongoose
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken'); 
+const User = require('../models/user'); 
 
 // ---------------------------------------------------------------------
 // POST /api/auth/signup
@@ -56,7 +56,6 @@ exports.login = (req, res) => {
   User.findOne({ email })
     .then((user) => {
       if (!user) {
-        // Si aucun utilisateur trouvé, on retourne une erreur d’authentification
         return res.status(401).json({ error: 'Utilisateur non trouvé' });
       }
 
@@ -69,9 +68,9 @@ exports.login = (req, res) => {
 
         // Génération d’un token JWT contenant l’ID de l’utilisateur
         const token = jwt.sign(
-          { userId: user._id },                  // Charge utile (payload)
-          process.env.TOKEN_SECRET,              // Clé secrète pour signer le token
-          { expiresIn: '24h' }                   // Durée de validité du token
+          { userId: user._id }, 
+          process.env.TOKEN_SECRET, 
+          { expiresIn: '24h' }
         );
 
         // Réponse avec l’ID utilisateur et le token JWT
@@ -79,7 +78,6 @@ exports.login = (req, res) => {
       });
     })
     .catch((error) => {
-      // Erreur serveur inattendue lors du processus de connexion
       console.error('Erreur lors du login :', error.message);
       res.status(500).json({ error: 'Erreur serveur lors de l’authentification.' });
     });
